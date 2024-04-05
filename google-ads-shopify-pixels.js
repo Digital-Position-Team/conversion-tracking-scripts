@@ -77,7 +77,7 @@ const DPEvents = {
 
   getCheckoutCompletData(evt) {
     return {
-      send_to: "AW-1027764777/nPfVCJmFkAIQqeSJ6gM",
+      send_to: "AW-XXXXXXXXXX/YYYYYYYYYYYYYYYYYYY",
       transaction_id: evt.data.checkout.order.id,
       currency: evt.data.checkout.currencyCode,
       value: evt.data.checkout.totalPrice.amount,
