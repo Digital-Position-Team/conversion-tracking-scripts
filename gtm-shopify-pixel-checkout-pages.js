@@ -1,8 +1,8 @@
-// Define dataLayer and the gtag function only within specific pages.
-// This is useful if you have a hard coded GTM installation in theme.liquid that you want to keep in place but need to add support for conversion tracking and can't use additional scripts anymore.
-// This example shows how to install GTM through pixels only on checkout pages
+// This example shows how to do GTM install with data layer ONLY on checkout pages
+// (This is useful if you have a hard coded GTM installation in theme.liquid that you want to keep in place but need to add support for conversion tracking and can't use additional scripts anymore.)
+// (This technique should avoid double counting)
+// Replace GTM ID with your own
 
-//subscribe to events
 analytics.subscribe("checkout_completed", (event) => {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
