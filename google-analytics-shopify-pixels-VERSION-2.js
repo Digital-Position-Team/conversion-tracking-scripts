@@ -1,4 +1,7 @@
-// Step 1. Add and initialize your third-party JavaScript pixel
+// This example shows how to intall Google Analytics (GA4) standard event tracking
+// (Version 2 is less clean but easier to understand for non-programmers)
+// Replace GA4 Datastream id with your own
+
 const script = document.createElement("script");
 script.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE");
 script.setAttribute("async", "");
@@ -10,8 +13,6 @@ function gtag() {
 }
 gtag("js", new Date());
 gtag("config", "G-EXAMPLE");
-
-// Directly embedding logic within analytics.subscribe callbacks
 
 analytics.subscribe("page_viewed", async (event) => {
   let ctx = event.context;
@@ -30,6 +31,15 @@ analytics.subscribe("product_viewed", async (event) => {
       item_id: event.data.productVariant.id,
       item_name: event.data.productVariant.product.title
     }],
+  });
+});
+
+analytics.subscribe("collection_viewed", async (event) => {
+  gtag("event", "view_item_list", {
+    items: event.data.collection.productVariants.map(variant => ({
+      item_id: variant.id,
+      item_name: variant.product.title,
+    })),
   });
 });
 
