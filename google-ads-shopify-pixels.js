@@ -1,4 +1,7 @@
-// Step 1. Add your Google Ads tag without HTML
+// This example shows how to intall Google Ads standard event tracking with enhanced conversions
+// (Same as Version 2 except the code is more organized)
+// Replace Google Ads ID with your own and the conversion label inside of checkoutData
+
 const script = document.createElement("script");
 script.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=AW-EXAMPLE");
 script.setAttribute("async", "");
@@ -11,7 +14,6 @@ function gtag() {
 gtag("js", new Date());
 gtag("config", "AW-EXAMPLE");
 
-// Step 2. Create the functions to get the event data from Shopify
 const DPEvents = {
   getItemsFromLineItems(lineItems) {
     let items = []
