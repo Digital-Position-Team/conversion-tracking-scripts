@@ -1,4 +1,7 @@
-// Step 1. Add and initialize your third-party JavaScript pixel (make sure to exclude HTML)
+// This example shows how to intall Google Analytics (GA4) standard event tracking
+// (Same as Version 2 except code is more organized)
+// Replace GA4 Datastream id with your own
+
 const script = document.createElement("script");
 script.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE");
 script.setAttribute("async", "");
@@ -11,7 +14,6 @@ function gtag() {
 gtag("js", new Date());
 gtag("config", "G-EXAMPLE");
 
-// Step 2. Subscribe to customer events using the analytics.subscribe() API
 const DPEvents = {
   getItemsFromLineItems(lineItems) {
     let items = []
@@ -39,6 +41,15 @@ const DPEvents = {
       currency: evt.data.productVariant.price.currencyCode,
       value: evt.data.productVariant.price.amount,
       items: [{ item_id: evt.data.productVariant.id, item_name: evt.data.productVariant.product.title }],
+    }
+  },
+
+  getViewCollectionData(evt) {
+    return {
+      items: event.data.collection.productVariants.map(variant => ({
+        item_id: variant.id,
+        item_name: variant.product.title,
+      })
     }
   },
 
@@ -86,13 +97,15 @@ analytics.subscribe("product_viewed", async (event) => {
 });
 
 analytics.subscribe("search_submitted", async (event) => {
-  gtag("event", "search", {
-    search_term: event.data.searchResult.query,
-  });
+  gtag("event", "search", {search_term: event.data.searchResult.query});
 });
 
 analytics.subscribe("product_added_to_cart", async (event) => {
   gtag("event", "add_to_cart", DPEvents.getAddToCartData(event));
+});
+
+analytics.subscribe("collection_viewed", async (event) => {
+  gtag("event", "view_item_list", DPEvents.getViewCollectionData(event));
 });
 
 analytics.subscribe("payment_info_submitted", async (event) => {
