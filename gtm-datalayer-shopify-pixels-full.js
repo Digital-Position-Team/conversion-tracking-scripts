@@ -1,6 +1,7 @@
-// This version is meant to be a full install of GTM with data layer. You should remove all other references to GTM across the site
+// This example shows how to do a full install of GTM with a data layer
+// (You should remove all other references to GTM across the site to prevent double counting)
+// Replace GTM ID with your own
 
-// Define dataLayer and the gtag function.
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 
