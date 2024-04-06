@@ -1,4 +1,7 @@
-// Step 1. Add your Google Ads tag without HTML
+// This example shows how to intall Google Ads standard event tracking with enhanced conversions
+// (Version 2 is less clean but easier to understand for non-programmers)
+// Replace Google Ads ID with your own and the conversion label inside of checkoutData
+
 const script = document.createElement("script");
 script.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=AW-EXAMPLE");
 script.setAttribute("async", "");
