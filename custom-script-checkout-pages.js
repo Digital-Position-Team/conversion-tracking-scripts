@@ -13,7 +13,7 @@ analytics.subscribe("checkout_completed", (event) => {
 });
 
 analytics.subscribe("checkout_started", (event) => {
-  // Custom script to only fire when a purchase occurs (make sure to exclude HTML) 
+  // Custom script to only fire when a checkout is initiated (should match base pixel above) 
   const customScript = document.createElement("script");
   customScript.setAttribute("src", "https://www.your-custom-script-link.com/script.js");
   customScript.setAttribute("async", "");
