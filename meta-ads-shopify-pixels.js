@@ -1,4 +1,5 @@
-// Full Meta Ads base pixel and purchase conversion event
+// This example shows how to install a Meta Ads base pixel and standard events
+// Replace pixel ID with your own
 
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -9,10 +10,8 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 
-// replace YOUR_PIXEL_ID
 fbq('init', "YOUR_PIXEL_ID");
 
-// integrate third-party pixel tracking
 analytics.subscribe("page_viewed", (event) => {
   fbq('track', 'PageView');
 });
