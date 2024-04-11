@@ -12,7 +12,7 @@ function gtag() {
   dataLayer.push(arguments);
 }
 gtag("js", new Date());
-gtag("config", "AW-EXAMPLE");
+gtag("config", "AW-EXAMPLE", { "allow_enhanced_conversions": true });
 
 analytics.subscribe("checkout_completed", async (event) => {
   const enhancedConversionData = {
