@@ -39,6 +39,10 @@ analytics.subscribe("checkout_completed", (event) => {
     shipping: event.data?.checkout?.shippingLine?.price?.amount,
     value: event.data?.checkout?.totalPrice?.amount,
     tax: event.data?.checkout?.totalTax?.amount,
+    items: event.data?.checkout?.lineItems.map(item => ({
+      item_id: item.variant?.product?.id,
+      item_name: item.variant?.product?.title,
+    })),
   });
 });
 
@@ -68,6 +72,22 @@ analytics.subscribe("checkout_started", (event) => {
     shipping: event.data?.checkout?.shippingLine?.price?.amount,
     value: event.data?.checkout?.totalPrice?.amount,
     tax: event.data?.checkout?.totalTax?.amount,
+    items: event.data?.checkout?.lineItems.map(item => ({
+      item_id: item.variant?.product?.id,
+      item_name: item.variant?.product?.title,
+    })),
+  });
+});
+
+analytics.subscribe("payment_info_submitted", async (event) => {
+  window.dataLayer.push({
+    event: "payment_info_submitted",
+    currency: event.data?.checkout?.currencyCode,
+    value: event.data?.checkout?.totalPrice.amount,
+    items: event.data?.checkout?.lineItems.map(item => ({
+      item_id: item.variant?.product?.id,
+      item_name: item.variant?.product?.title,
+    })),
   });
 });
 
@@ -78,8 +98,8 @@ analytics.subscribe("product_added_to_cart", (event) => {
     id: event.id,
     client_id: event.clientId,
     url: event.context.document.location.href,
-    price: event.data?.cartLine?.merchandise?.price?.amount,
-    currency: event.data?.cartLine?.merchandise?.id,
+    value: event.data?.cartLine?.merchandise?.price?.amount,
+    currency: event.data?.cartLine?.cost?.totalAmount?.currencyCode,
     product_title: event.data?.cartLine?.merchandise?.product?.title,
     quantity: event.data?.cartLine?.quantity,
     total_cost: event.data?.cartLine?.cost?.totalAmount?.amount,
@@ -94,8 +114,13 @@ analytics.subscribe("cart_viewed", (event) => {
     client_id: event.clientId,
     url: event.context.document.location.href,
     total_cost: event.data?.cart?.cost?.totalAmount?.amount,
+    currency: event.data?.cart?.cost?.totalAmount?.currencyCode,
     quantity: event.data?.cart?.totalQuantity,
     cart_id: event.data?.cart?.id,
+    items: event.data?.lines.map(item => ({
+      item_id: item.merchandise?.id,
+      item_name: item.merchandise?.title,
+    })),
   });
 });
 
@@ -143,5 +168,9 @@ analytics.subscribe("collection_viewed", (event) => {
     url: event.context.document.location.href,
     collection_id: event.data?.collection?.id,
     collection_title: event.data?.collection?.title,
+    items: event.data?.collection?.productVariants.map(variant => ({
+      item_id: variant.id,
+      item_name: variant.product?.title,
+    })),
   });
 });
