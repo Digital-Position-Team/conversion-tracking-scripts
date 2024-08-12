@@ -1,6 +1,19 @@
 // This example shows how to do a full install of GTM with a data layer
 // (You should remove all other references to GTM across the site to prevent double counting)
 // Replace GTM ID with your own
+//
+// Events tracked:
+// - checkout_completed
+// - checkout_started
+// - payment_info_submitted
+// - checkout_shipping_info_submitted
+// - product_added_to_cart
+// - product_removed_from_cart
+// - cart_viewed
+// - page_viewed
+// - product_viewed
+// - collection_viewed
+// - search_submitted
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -82,6 +95,26 @@ analytics.subscribe("checkout_started", (event) => {
 analytics.subscribe("payment_info_submitted", async (event) => {
   window.dataLayer.push({
     event: "payment_info_submitted",
+    timestamp: event.timestamp,
+    id: event.id,
+    client_id: event.clientId,
+    url: event.context.document.location.href,
+    currency: event.data?.checkout?.currencyCode,
+    value: event.data?.checkout?.totalPrice.amount,
+    items: event.data?.checkout?.lineItems.map(item => ({
+      item_id: item.variant?.product?.id,
+      item_name: item.variant?.product?.title,
+    })),
+  });
+});
+
+analytics.subscribe("checkout_shipping_info_submitted", async (event) => {
+  window.dataLayer.push({
+    event: "checkout_shipping_info_submitted",
+    timestamp: event.timestamp,
+    id: event.id,
+    client_id: event.clientId,
+    url: event.context.document.location.href,
     currency: event.data?.checkout?.currencyCode,
     value: event.data?.checkout?.totalPrice.amount,
     items: event.data?.checkout?.lineItems.map(item => ({
@@ -94,6 +127,21 @@ analytics.subscribe("payment_info_submitted", async (event) => {
 analytics.subscribe("product_added_to_cart", (event) => {
   window.dataLayer.push({
     event: "product_added_to_cart",
+    timestamp: event.timestamp,
+    id: event.id,
+    client_id: event.clientId,
+    url: event.context.document.location.href,
+    value: event.data?.cartLine?.merchandise?.price?.amount,
+    currency: event.data?.cartLine?.cost?.totalAmount?.currencyCode,
+    product_title: event.data?.cartLine?.merchandise?.product?.title,
+    quantity: event.data?.cartLine?.quantity,
+    total_cost: event.data?.cartLine?.cost?.totalAmount?.amount,
+  });
+});
+
+analytics.subscribe("product_removed_to_cart", (event) => {
+  window.dataLayer.push({
+    event: "product_removed_to_cart",
     timestamp: event.timestamp,
     id: event.id,
     client_id: event.clientId,
@@ -148,17 +196,6 @@ analytics.subscribe("product_viewed", (event) => {
   });
 });
 
-analytics.subscribe("search_submitted", (event) => {
-  window.dataLayer.push({
-    event: "search_submitted",
-    timestamp: event.timestamp,
-    id: event.id,
-    client_id: event.clientId,
-    url: event.context.document.location.href,
-    query: event.data?.searchResult?.query,
-  });
-});
-
 analytics.subscribe("collection_viewed", (event) => {
   window.dataLayer.push({
     event: "collection_viewed",
@@ -174,3 +211,16 @@ analytics.subscribe("collection_viewed", (event) => {
     })),
   });
 });
+
+analytics.subscribe("search_submitted", (event) => {
+  window.dataLayer.push({
+    event: "search_submitted",
+    timestamp: event.timestamp,
+    id: event.id,
+    client_id: event.clientId,
+    url: event.context.document.location.href,
+    query: event.data?.searchResult?.query,
+  });
+});
+
+
