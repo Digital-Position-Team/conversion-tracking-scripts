@@ -12,6 +12,13 @@
 
 analytics.subscribe("checkout_completed", (event) => {
   uetq = uetq || [];
+
+  // For enhanced conversions
+  window.uetq.push('set', { 'pid': { 
+    'em': event.data.checkout.email,
+    'ph': event.data.checkout.phone,
+   } });
+  
   uetq.push('event', 'conversion',
     {
       'event_category': 'your_event_category',
