@@ -12,7 +12,7 @@ function gtag() {
   dataLayer.push(arguments);
 }
 gtag("js", new Date());
-gtag("config", "G-EXAMPLE");
+gtag("config", "G-EXAMPLE", { send_page_view: false });
 
 const DPEvents = {
   getItemsFromLineItems(lineItems) {
