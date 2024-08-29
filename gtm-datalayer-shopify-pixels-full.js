@@ -165,7 +165,7 @@ analytics.subscribe("cart_viewed", (event) => {
     currency: event.data?.cart?.cost?.totalAmount?.currencyCode,
     quantity: event.data?.cart?.totalQuantity,
     cart_id: event.data?.cart?.id,
-    items: event.data?.lines.map(item => ({
+    items: event.data?.cart?.lines.map(item => ({
       item_id: item.merchandise?.id,
       item_name: item.merchandise?.title,
     })),
