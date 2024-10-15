@@ -1,5 +1,4 @@
 // This example shows how to intall Google Analytics (GA4) standard event tracking
-// (Version 2 is less clean but easier to understand for non-programmers)
 // Replace GA4 Datastream id with your own
 
 const script = document.createElement("script");
