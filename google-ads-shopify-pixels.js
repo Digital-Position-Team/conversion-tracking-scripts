@@ -1,5 +1,4 @@
 // This example shows how to intall Google Ads standard event tracking with enhanced conversions
-// (Version 2 is less clean but easier to understand for non-programmers)
 // Replace Google Ads ID with your own and the conversion label inside of checkoutData
 
 const script = document.createElement("script");
