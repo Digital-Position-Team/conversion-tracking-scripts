@@ -28,7 +28,9 @@ analytics.subscribe("product_viewed", async (event) => {
     value: event.data.productVariant.price.amount,
     items: [{
       item_id: event.data.productVariant.id,
-      item_name: event.data.productVariant.product.title
+      item_name: event.data.productVariant.product.title,
+      price: event.data.productVariant.price.amount,
+      quantity: 1
     }],
   });
 });
@@ -54,7 +56,9 @@ analytics.subscribe("product_added_to_cart", async (event) => {
     value: event.data.cartLine.merchandise.price.amount,
     items: [{
       item_id: event.data.cartLine.merchandise.id,
-      item_name: event.data.cartLine.merchandise.product.title
+      item_name: event.data.cartLine.merchandise.product.title,
+      price: event.data.cartLine.cost.amount,
+      quantity: event.data.cartLine.quantity
     }],
   });
 });
@@ -66,6 +70,8 @@ analytics.subscribe("payment_info_submitted", async (event) => {
     items: event.data.checkout.lineItems.map(item => ({
       item_id: item.variant.product.id,
       item_name: item.variant.product.title,
+      price: item.variant.price.amount,
+      quantity: item.quantity
     })),
   });
 });
@@ -77,6 +83,8 @@ analytics.subscribe("checkout_started", async (event) => {
     items: event.data.checkout.lineItems.map(item => ({
       item_id: item.variant.product.id,
       item_name: item.variant.product.title,
+      price: item.variant.price.amount,
+      quantity: item.quantity
     })),
   });
 });
@@ -89,6 +97,8 @@ analytics.subscribe("checkout_completed", async (event) => {
     items: event.data.checkout.lineItems.map(item => ({
       item_id: item.variant.product.id,
       item_name: item.variant.product.title,
+      price: item.variant.price.amount,
+      quantity: item.quantity
     })),
   });
 });
